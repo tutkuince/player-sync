@@ -20,7 +20,6 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Player {
     private final String name;  // Name of the player instance, used to identify sender or receiver.
-    private Message message;
 
     private int sentMessageCounter = 0;    // Counter to track the number of messages sent by this player.
     private int receivedMessageCounter = 0;    // Counter to track the number of messages received by this player.
@@ -85,7 +84,7 @@ public class Player {
                 messageConsumed.await(); // Wait for message to be consumed by receiver.
             }
             // Create a new message and add it to the queue.
-            message = Message.builder()
+            Message message = Message.builder()
                     .sender(sender.getName())
                     .content("Hello")
                     .sequence(++sentMessageCounter)
