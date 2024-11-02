@@ -25,5 +25,7 @@ public class Main {
 
         sendMessage.join();
         receiveMessage.join();
+
+        System.out.println("\nCommunication completed. Program shutting down.");
     }
 }
