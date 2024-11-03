@@ -1,4 +1,4 @@
-package com.incetutku;
+package com.incetutku.entity;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;

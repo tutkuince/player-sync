@@ -1,4 +1,4 @@
-package com.incetutku;
+package com.incetutku.entity;
 
 public class Message {
     private final String content;   // Content of the message (e.g., "Hello").
