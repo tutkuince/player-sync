@@ -2,8 +2,9 @@ package com.incetutku;
 
 import com.incetutku.entity.Player;
 
+import static com.incetutku.util.Constants.MAX_MESSAGE_COUNT;
+
 public class Main {
-    private static final int MAX_MESSAGE_COUNT = 10;
 
     public static void main(String[] args) throws InterruptedException {
         Player initiator = new Player("Initiator");
