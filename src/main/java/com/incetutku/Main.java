@@ -1,5 +1,7 @@
 package com.incetutku;
 
+import com.incetutku.entity.Player;
+
 public class Main {
     private static final int MAX_MESSAGE_COUNT = 10;
 
