@@ -1,4 +1,4 @@
-package com.incetutku;
+package com.incetutku.entity;
 
 
 import org.junit.jupiter.api.BeforeEach;
