@@ -1,12 +1,15 @@
 package com.incetutku.entity;
 
-public class Message {
+import java.io.Serializable;
+
+public class Message implements Serializable {
     private final String content;   // Content of the message (e.g., "Hello").
     private final String sender;    // Name of the sender.
     private final int sequence;     // Sequence number of the message.
 
     /**
      * Private constructor to enforce the use of the Builder pattern.
+     *
      * @param builder The Builder object containing the fields to initialize the Message.
      */
     private Message(Builder builder) {
@@ -17,6 +20,7 @@ public class Message {
 
     /**
      * Static factory method to initiate the Builder for creating a Message instance.
+     *
      * @return A new Builder instance for chaining.
      */
     public static Builder builder() {
@@ -38,6 +42,7 @@ public class Message {
 
     /**
      * Custom toString method to represent the Message in a formatted string.
+     *
      * @return A formatted string representing the message with sender, content, and sequence.
      */
     @Override
@@ -70,6 +75,7 @@ public class Message {
 
         /**
          * Sets the sender of the message.
+         *
          * @param sender The name of the sender.
          * @return This Builder instance to allow chaining.
          */
@@ -80,6 +86,7 @@ public class Message {
 
         /**
          * Sets the sequence number of the message.
+         *
          * @param sequence The sequence number for the message.
          * @return This Builder instance to allow chaining.
          */
@@ -90,6 +97,7 @@ public class Message {
 
         /**
          * Builds and returns a Message instance using the specified attributes.
+         *
          * @return A new Message instance with the fields set by the builder.
          */
         public Message build() {
