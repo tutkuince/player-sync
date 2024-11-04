@@ -4,7 +4,7 @@ import com.incetutku.entity.Player;
 
 import static com.incetutku.util.Constants.MAX_MESSAGE_COUNT;
 
-public class Main {
+public class ThreadMain {
 
     public static void main(String[] args) throws InterruptedException {
         Player initiator = new Player("Initiator");
