@@ -31,6 +31,12 @@ public class PlayerServer {
         this.counter = 0;
     }
 
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        System.out.println("Player Server is starting...");
+        PlayerServer server = new PlayerServer();
+        server.start();
+    }
+
     /**
      * Starts the PlayerServer, listening for incoming connections, and initiates message exchange.
      * This method continuously sends and receives messages until the predefined message count is reached.

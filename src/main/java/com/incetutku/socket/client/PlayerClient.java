@@ -29,6 +29,12 @@ public class PlayerClient {
         this.counter = 0;
     }
 
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+
+        PlayerClient client = new PlayerClient();
+        client.start();
+    }
+
     /**
      * Starts the PlayerClient by establishing a connection to the server, then continuously
      * receiving messages and responding back until 10 messages have been sent.
