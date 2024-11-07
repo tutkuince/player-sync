@@ -3,9 +3,9 @@ package com.incetutku.entity;
 import java.io.Serializable;
 
 public class Message implements Serializable {
-    private final String content;   // Content of the message (e.g., "Hello").
-    private final String sender;    // Name of the sender.
-    private final int sequence;     // Sequence number of the message.
+    private final String content;
+    private final String sender;
+    private final int sequence;
 
     /**
      * Private constructor to enforce the use of the Builder pattern.
@@ -54,11 +54,10 @@ public class Message implements Serializable {
      * Builder class for creating a Message instance with a flexible and readable pattern.
      */
     public static class Builder {
-        private String content; // Temporary storage for content during building.
-        private String sender;  // Temporary storage for sender during building.
-        private int sequence;   // Temporary storage for sequence number during building.
+        private String content;
+        private String sender;
+        private int sequence;
 
-        // Private constructor for Builder to limit instantiation through the Message class only.
         private Builder() {
         }
 

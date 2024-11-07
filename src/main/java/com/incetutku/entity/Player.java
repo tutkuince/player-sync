@@ -19,18 +19,16 @@ import java.util.concurrent.locks.ReentrantLock;
  * sequential operation. A BlockingQueue is used to facilitate the message exchange.
  */
 public class Player {
-    private final String name;  // Name of the player instance, used to identify sender or receiver.
+    private final String name;
 
-    private int sentMessageCounter = 0;    // Counter to track the number of messages sent by this player.
-    private int receivedMessageCounter = 0;    // Counter to track the number of messages received by this player.
-    private static boolean messagePresent = false;  // Flag indicating whether there is an unread message available.
+    private int sentMessageCounter = 0;
+    private int receivedMessageCounter = 0;
+    private static boolean messagePresent = false;
 
-    // Lock and conditions for controlling thread synchronization.
     private static final Lock lock = new ReentrantLock();
     private static final Condition messageAvailable = lock.newCondition();
     private static final Condition messageConsumed = lock.newCondition();
 
-    // Queue for holding messages between players.
     private static final BlockingQueue<Message> messageQueue = new LinkedBlockingQueue<>();
 
     /**
@@ -79,23 +77,20 @@ public class Player {
     public void sendMessage(Player sender) {
         lock.lock();
         try {
-            // Wait if there is already a message waiting to be consumed.
             while (messagePresent) {
-                messageConsumed.await(); // Wait for message to be consumed by receiver.
+                messageConsumed.await();
             }
-            // Create a new message and add it to the queue.
             Message message = Message.builder()
                     .sender(sender.getName())
                     .content("Hello")
                     .sequence(++sentMessageCounter)
                     .build();
 
-            messageQueue.put(message);      // Place message in the queue.
-            System.out.println(message);    // Output the message for tracking purposes.
+            messageQueue.put(message);
+            System.out.println(message);
 
-            // Update the messagePresent flag and notify receiver that a message is available.
             messagePresent = true;
-            messageAvailable.signal(); // Notify the Consumer that the message is available
+            messageAvailable.signal();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
@@ -111,20 +106,18 @@ public class Player {
     public void receiveMessage() {
         lock.lock();
         try {
-            // Wait until a message is available for consumption.
             while (!messagePresent) {
-                messageAvailable.await(); // Wait until the Producer produces a message
+                messageAvailable.await();
             }
-            // Retrieve and remove the message from the queue.
+
             Message receivedMessage = messageQueue.remove();
 
-            System.out.printf("Responder received: %s \n", receivedMessage);    // Output received message.
+            System.out.printf("Responder received: %s \n", receivedMessage);
 
             receivedMessageCounter++;
 
-            // Update the messagePresent flag and signal the sender that the message has been consumed.
             messagePresent = false;
-            messageConsumed.signal(); // Signal the Producer that the message is consumed
+            messageConsumed.signal();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         } finally {
