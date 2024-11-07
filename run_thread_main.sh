@@ -1,10 +1,9 @@
-# Step 1: Compile the project
-echo "Compiling the project..."
-mvn clean compile
+# Package the project as a JAR (only needs to be done once or after code changes)
+mvn clean package
 
-# Step 2: Run the ThreadMain class
-echo "Starting the ThreadMain application..."
-mvn exec:java -Dexec.mainClass="com.incetutku.ThreadMain"
+# Run the JAR file
+java -cp target/PlayerCommunicationProject.jar com.incetutku.ThreadMain
 
-# Wait a few seconds for the see the result
-sleep 5
+# Optional: Wait for the server process to finish
+echo "Press any key to end the program..."
+read -n 1 -s  # Waits for a single key press
