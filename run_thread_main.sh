@@ -1,8 +1,8 @@
 # Package the project as a JAR (only needs to be done once or after code changes)
-mvn clean package
+mvn clean package -P thread-main
 
 # Run the JAR file
-java -cp target/PlayerCommunicationProject.jar com.incetutku.ThreadMain
+java -jar target/thread-main.jar
 
 # Optional: Wait for the server process to finish
 echo "Press any key to end the program..."
