@@ -30,6 +30,7 @@ chmod +x run_socket_main.sh
 ```bash
 chmod +x run_thread_main.sh
 ```
+To Run:
 - Based on one process
 ```bash
 ./run_thread_main.sh
