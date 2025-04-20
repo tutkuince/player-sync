@@ -22,7 +22,6 @@ public class ThreadMain extends BaseApp {
     static String targetClient = clientNames.get(1);
     static AtomicBoolean firstMessage = new AtomicBoolean(false);
     static MessageBox messageBox = new MessageBox();
-    static AtomicInteger counter = new AtomicInteger(0);
 
     @Override
     protected void run() {
@@ -62,14 +61,12 @@ public class ThreadMain extends BaseApp {
                     Optional<Message> optionalMessage = client.receiveMessage();
                     if (optionalMessage.isPresent()) {
                         Message message = optionalMessage.get();
-                        int i = counter.incrementAndGet();
-                        System.out.println("Message received: " + message + i);
+                        System.out.println("Message received: " + message + " " + client.getReceivedMessageCount());
                         boolean result = client.sendMessage(message.sender(), message.content());
 
                         if (!result) {
                             limitRaised = true;
                         }
-
                     }
                 } else if (client.limit()) {
                     limitRaised = true;

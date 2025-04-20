@@ -15,6 +15,14 @@ public class Client {
         this.messageBox = messageBox;
     }
 
+    public int getSentMessageCount() {
+        return sentMessageCount;
+    }
+
+    public int getReceivedMessageCount() {
+        return receivedMessageCount;
+    }
+
     public boolean sendMessage(String  target, String message) {
         if (sentMessageCount >= CAPACITY) {
             return false;
