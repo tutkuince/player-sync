@@ -8,7 +8,7 @@ public final class Constant {
 
     public static final int CAPACITY = 10;
 
-    public static final int PORT = 10;
+    public static final int PORT = 12345;
     public static final int PORT_NUMBER = 3535;
 
     public static final String HOST_NAME = "localhost";
