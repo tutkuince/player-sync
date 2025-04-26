@@ -1,64 +1,48 @@
 package com.incetutku.player.sync.socket;
 
 import com.incetutku.player.sync.common.BaseApp;
+import static com.incetutku.player.sync.util.Constant.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
-import static com.incetutku.player.sync.util.Constant.HOST_NAME;
-import static com.incetutku.player.sync.util.Constant.PORT_NUMBER;
-
 public class ClientApp extends BaseApp {
-    private static final int POLL_INTERVAL_MS = 1000;
 
     @Override
     protected void run() {
-        try (Socket socket = new Socket(HOST_NAME, PORT_NUMBER);
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+        try (
+                Socket socket = new Socket(HOST_NAME, PORT_NUMBER);
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                PrintWriter out = new PrintWriter(socket.getOutputStream(), true)
+        ) {
+            String role = in.readLine(); // "initiator" veya "listener"
+            System.out.println("Assigned role: " + role);
 
-            String clientRole = in.readLine();  // initiator ya da listener
-            System.out.println("Assigned role: " + clientRole);
-
-            int messageCount = 0;
-            boolean messageSent = false;
-
-            while (true) {
-                // initiator ilk mesajı yalnızca bir kere yollar
-                if (clientRole.equals("initiator") && !messageSent) {
-                    out.println("send::listener::This is message 1");
-                    messageSent = true;
-                    System.out.println("Sent initial message to listener");
+            if ("initiator".equals(role)) {
+                int counter = 0;
+                while (counter < CAPACITY) {
+                    String message = "msg" + counter;
+                    out.println(message);
+                    String reply = in.readLine();
+                    if ("BYE".equals(reply) || reply == null) break;
+                    System.out.println("Initiator received: " + reply);
+                    counter++;
                 }
-
-                // Tüm clientler sürekli poll eder
-                out.println("poll::");
-
-                String serverResponse = in.readLine();
-                if (serverResponse != null) {
-                    if (serverResponse.contains("Connection closed")) {
-                        System.out.println("Server closed the connection.");
-                        break;
-                    }
-                    System.out.println("Received: " + serverResponse);
-
-                    // Eğer initiator cevap aldıysa yeni mesaj yollayabilir
-                    if (clientRole.equals("initiator") && messageCount < 9) {
-                        messageCount++;
-                        String msg = "This is message " + (messageCount + 1);
-                        out.println("send::listener::" + msg);
-                        System.out.println("Sent: " + msg);
-                    }
+                System.out.println(role + " done.");
+            } else if ("listener".equals(role)) {
+                int counter = 0;
+                while (true) {
+                    String incoming = in.readLine();
+                    if ("BYE".equals(incoming) || incoming == null) break;
+                    System.out.println("Listener received: " + incoming);
+                    String response = incoming + "|" + counter;
+                    out.println(response);
+                    counter++;
                 }
-
-                Thread.sleep(1000); // Çok hızlı poll yapmasın
+                System.out.println(role + " done.");
             }
-
-        } catch (IOException | InterruptedException e) {
-            System.out.println("Exception occurred: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
