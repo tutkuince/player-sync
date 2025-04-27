@@ -1,7 +1,10 @@
+# Go to the directory of the script (project root)
 cd "$(dirname "$0")"
 
+# Build the project (clean & package)
 mvn clean package
 
+# Move into the target directory where the JAR is
 cd target
 
 echo "Starting SocketServer..."
